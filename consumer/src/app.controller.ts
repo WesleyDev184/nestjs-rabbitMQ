@@ -14,7 +14,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @EventPattern('order-placed')
-  handleOrderPlaced(@Payload() order: OrderDto) {
+  handleOrderPlaced(@Payload() order: OrderDto, @Ctx() context: RmqContext) {
+    console.log(context.getPattern());
     return this.appService.handleOrderPlaced(order);
   }
 
