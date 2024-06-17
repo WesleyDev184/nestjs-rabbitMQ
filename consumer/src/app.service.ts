@@ -7,6 +7,8 @@ export class AppService {
 
   handleOrderPlaced(order: OrderDto) {
     console.log(`Received a new order - customer: ${order.email}`);
+    order.id = this.orders.length + 1;
+
     this.orders.push(order);
     //Send email
   }
