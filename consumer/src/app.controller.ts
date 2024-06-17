@@ -20,7 +20,7 @@ export class AppController {
 
   @MessagePattern({ cmd: 'fetch-orders' })
   getOrders(@Ctx() context: RmqContext) {
-    // console.log(context.getMessage());
+    console.log(context.getPattern());
     return this.appService.getOrders();
   }
 }
