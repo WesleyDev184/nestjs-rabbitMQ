@@ -6,7 +6,7 @@ export class AppService {
   orders: OrderDto[] = [];
 
   handleOrderPlaced(order: OrderDto) {
-    console.log(`Received a new order - customer: ${order.email}`);
+    console.log(`Received a new order - customer: ${order.email}\n`);
     order.id = this.orders.length + 1;
 
     this.orders.push(order);
@@ -14,6 +14,7 @@ export class AppService {
   }
 
   getOrders() {
+    console.log(`Returning all orders - ${this.orders.length} in total\n`);
     return this.orders;
   }
 }

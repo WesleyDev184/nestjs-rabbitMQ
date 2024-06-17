@@ -13,13 +13,13 @@ import { OrderDto } from './order.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @EventPattern('order-placed')
+  @EventPattern({ key: 'order', cmd: 'placed' })
   handleOrderPlaced(@Payload() order: OrderDto, @Ctx() context: RmqContext) {
     console.log(context.getPattern());
     return this.appService.handleOrderPlaced(order);
   }
 
-  @MessagePattern({ cmd: 'fetch-orders' })
+  @MessagePattern({ key: 'order', cmd: 'fetch-all' })
   getOrders(@Ctx() context: RmqContext) {
     console.log(context.getPattern());
     return this.appService.getOrders();
