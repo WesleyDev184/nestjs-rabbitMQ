@@ -11,7 +11,7 @@ async function bootstrap() {
         urls: ['amqp://admin:admin@localhost:5672'],
         queue: 'orders-queue',
         queueOptions: {
-          durable: false,
+          durable: true,
         },
       },
     },
