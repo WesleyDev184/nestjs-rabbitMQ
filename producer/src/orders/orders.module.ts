@@ -1,25 +1,31 @@
+import {
+  ExchangeType,
+  RabbitMQClient,
+} from '@lukadriel/nestjs-rabbitmq-transporter';
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 
 @Module({
-  imports: [
-    ClientsModule.register([
-      {
-        name: 'ORDERS_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://admin:admin@localhost:5672'],
-          queue: 'orders-queue',
-          queueOptions: {
-            durable: true,
-          },
-        },
-      },
-    ]),
-  ],
   controllers: [OrdersController],
-  providers: [OrdersService],
+  providers: [
+    OrdersService,
+    {
+      provide: 'RABBITMQ_CLIENT',
+      useFactory: () => {
+        return new RabbitMQClient({
+          urls: ['amqp://admin:admin@localhost:5672'],
+          exchange: 'teste',
+          exchangeType: ExchangeType.TOPIC,
+          queue: 'server_queue_name',
+          replyQueue: 'client_queue_name',
+          replyQueueOptions: {
+            exclusive: false,
+          },
+          noAck: true,
+        });
+      },
+    },
+  ],
 })
 export class OrdersModule {}

@@ -15,4 +15,9 @@ export class OrdersController {
   getOrders() {
     return this.ordersService.getOrders();
   }
+
+  @Get('test')
+  test() {
+    return this.ordersService.test();
+  }
 }

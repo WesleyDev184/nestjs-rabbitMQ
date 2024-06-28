@@ -11,10 +11,14 @@ export class AppService {
 
     this.orders.push(order);
     //Send email
+
+    console.log(`Order placed - customer: ${order.email}\n`);
+
+    return `order ${order.id} Placed`;
   }
 
   getOrders() {
     console.log(`Returning all orders - ${this.orders.length} in total\n`);
-    return this.orders;
+    return JSON.stringify(this.orders);
   }
 }
